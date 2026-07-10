@@ -1,0 +1,54 @@
+{
+  "business_type": "General Business",
+  "questions": [
+    {
+      "id": "GQ1",
+      "question": "How many employees currently work in your business?",
+      "type": "number",
+      "required": true
+    },
+    {
+      "id": "GQ2",
+      "question": "Approximately how many customer transactions or orders do you complete in an average month?",
+      "type": "number",
+      "required": true
+    },
+    {
+      "id": "GQ3",
+      "question": "What is your biggest operational or administrative challenge?",
+      "type": "single_select",
+      "required": true,
+      "options": [
+        "Managing team schedules and tasks",
+        "Tracking sales, billing, and financials",
+        "Inventory or material tracking",
+        "Customer communication and marketing",
+        "No major administrative challenge"
+      ]
+    },
+    {
+      "id": "GQ4",
+      "question": "How do you currently manage your business records?",
+      "type": "single_select",
+      "required": true,
+      "options": [
+        "Paper books and manual registers",
+        "Excel or digital spreadsheets",
+        "Dedicated business management software",
+        "No structured record system"
+      ]
+    },
+    {
+      "id": "GQ5",
+      "question": "What is your primary business goal?",
+      "type": "single_select",
+      "required": true,
+      "options": [
+        "Increase sales and customer base",
+        "Reduce operating costs",
+        "Improve team productivity",
+        "Expand to new locations or services"
+      ]
+    }
+  ]
+}

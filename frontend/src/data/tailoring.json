@@ -1,0 +1,87 @@
+{
+  "business_type": "Tailoring Business",
+  "questions": [
+    {
+      "id": "TQ1",
+      "question": "How many employees or tailors currently work in your business?",
+      "type": "number",
+      "required": true
+    },
+    {
+      "id": "TQ2",
+      "question": "How many customer orders do you complete in an average month?",
+      "type": "number",
+      "required": true
+    },
+    {
+      "id": "TQ3",
+      "question": "What is your biggest staff-related challenge?",
+      "type": "single_select",
+      "required": true,
+      "options": [
+        "Low productivity",
+        "Difficulty finding skilled tailors",
+        "Attendance issues",
+        "Uneven workload distribution",
+        "High staff turnover",
+        "No major staff issue"
+      ]
+    },
+    {
+      "id": "TQ4",
+      "question": "What is your biggest inventory or material-related challenge?",
+      "type": "single_select",
+      "required": true,
+      "options": [
+        "Fabric wastage",
+        "Running out of materials",
+        "Too much unused material",
+        "Difficulty tracking materials",
+        "Supplier delays",
+        "No major inventory issue"
+      ]
+    },
+    {
+      "id": "TQ5",
+      "question": "What is your biggest operational challenge?",
+      "type": "single_select",
+      "required": true,
+      "options": [
+        "Late order delivery",
+        "Measurement errors",
+        "Too much rework or alteration",
+        "Order tracking",
+        "Customer communication",
+        "Managing peak-season demand"
+      ]
+    },
+    {
+      "id": "TQ6",
+      "question": "How do you currently manage orders, staff, and inventory?",
+      "type": "single_select",
+      "required": true,
+      "options": [
+        "Paper registers",
+        "Excel or spreadsheets",
+        "Business management software",
+        "Combination of paper and digital tools",
+        "No structured system"
+      ]
+    },
+    {
+      "id": "TQ7",
+      "question": "What is your main business goal?",
+      "type": "single_select",
+      "required": true,
+      "options": [
+        "Increase number of orders",
+        "Increase profit",
+        "Reduce fabric wastage",
+        "Improve staff productivity",
+        "Reduce delivery time",
+        "Increase repeat customers",
+        "Expand the business"
+      ]
+    }
+  ]
+}

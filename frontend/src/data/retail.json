@@ -1,0 +1,88 @@
+{
+  "business_type": "Retail Shop",
+  "questions": [
+    {
+      "id": "RQ1",
+      "question": "How many employees currently work in your shop?",
+      "type": "number",
+      "required": true
+    },
+    {
+      "id": "RQ2",
+      "question": "Approximately how many customers do you serve in an average day?",
+      "type": "number",
+      "required": true
+    },
+    {
+      "id": "RQ3",
+      "question": "What is your biggest staff-related challenge?",
+      "type": "single_select",
+      "required": true,
+      "options": [
+        "Low productivity",
+        "Attendance issues",
+        "High staff turnover",
+        "Poor customer service",
+        "Difficulty assigning responsibilities",
+        "No major staff issue"
+      ]
+    },
+    {
+      "id": "RQ4",
+      "question": "What is your biggest inventory challenge?",
+      "type": "single_select",
+      "required": true,
+      "options": [
+        "Dead or unsold stock",
+        "Running out of popular products",
+        "Difficulty tracking stock",
+        "Overstocking",
+        "Damaged or expired products",
+        "Supplier delays",
+        "No major inventory issue"
+      ]
+    },
+    {
+      "id": "RQ5",
+      "question": "How do you currently manage sales and inventory?",
+      "type": "single_select",
+      "required": true,
+      "options": [
+        "Paper registers",
+        "Excel or spreadsheets",
+        "POS or billing software",
+        "Inventory management software",
+        "No structured system"
+      ]
+    },
+    {
+      "id": "RQ6",
+      "question": "What is your biggest sales challenge?",
+      "type": "single_select",
+      "required": true,
+      "options": [
+        "Low customer footfall",
+        "Low repeat customers",
+        "Low profit margins",
+        "High competition",
+        "Seasonal demand",
+        "Low average purchase value"
+      ]
+    },
+    {
+      "id": "RQ7",
+      "question": "What is your main business goal?",
+      "type": "single_select",
+      "required": true,
+      "options": [
+        "Increase sales",
+        "Increase profit margin",
+        "Reduce dead stock",
+        "Improve inventory turnover",
+        "Improve staff productivity",
+        "Increase repeat customers",
+        "Open another shop"
+      ]
+    }
+  ]
+}

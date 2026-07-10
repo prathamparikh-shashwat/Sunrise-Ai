@@ -1,0 +1,82 @@
+{
+  "business_type": "Cattle Feed Business",
+  "questions": [
+    {
+      "id": "CFQ1",
+      "question": "How many employees or workers currently work in your business?",
+      "type": "number",
+      "required": true
+    },
+    {
+      "id": "CFQ2",
+      "question": "What is your average monthly production or sales volume (in tons or bags)?",
+      "type": "number",
+      "required": true
+    },
+    {
+      "id": "CFQ3",
+      "question": "What is your biggest manufacturing or production challenge?",
+      "type": "single_select",
+      "required": true,
+      "options": [
+        "Ingredient mixing accuracy",
+        "Machine downtime and maintenance",
+        "Moisture control and spoilage",
+        "High electricity and power costs",
+        "No major production issue"
+      ]
+    },
+    {
+      "id": "CFQ4",
+      "question": "What is your biggest raw material or supply chain challenge?",
+      "type": "single_select",
+      "required": true,
+      "options": [
+        "Fluctuating raw material prices (grains, meals)",
+        "Raw material quality inconsistency",
+        "Supplier delivery delays",
+        "Difficulty tracking raw material stock",
+        "No major supply chain issue"
+      ]
+    },
+    {
+      "id": "CFQ5",
+      "question": "What is your primary sales or distribution challenge?",
+      "type": "single_select",
+      "required": true,
+      "options": [
+        "Seasonal demand fluctuations",
+        "Outstanding customer credit and collections",
+        "High transport and logistics costs",
+        "Local market competition",
+        "Low dealer/retailer awareness"
+      ]
+    },
+    {
+      "id": "CFQ6",
+      "question": "How do you currently manage inventory, production records, and billing?",
+      "type": "single_select",
+      "required": true,
+      "options": [
+        "Paper registers",
+        "Excel or spreadsheets",
+        "Dedicated ERP or formulation software",
+        "Combination of paper and digital tools",
+        "No structured system"
+      ]
+    },
+    {
+      "id": "CFQ7",
+      "question": "What is your primary business goal?",
+      "type": "single_select",
+      "required": true,
+      "options": [
+        "Increase production capacity",
+        "Reduce production or formulation costs",
+        "Expand dealer distribution network",
+        "Improve feed quality and consistency",
+        "Reduce credit cycle and improve collections"
+      ]
+    }
+  ]
+}
