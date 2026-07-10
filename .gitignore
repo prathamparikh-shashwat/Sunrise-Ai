@@ -1,0 +1,56 @@
+# Dependency directories
+node_modules/
+jspm_packages/
+web_resources/
+
+# Build outputs
+dist/
+build/
+bin/
+obj/
+out/
+
+# Python virtual environments
+.venv/
+venv/
+ENV/
+env/
+python_env/
+
+# Python cache and compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyd
+.pytest_cache/
+.tox/
+.coverage
+htmlcov/
+.mypy_cache/
+
+# Local configuration files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.backup
+*.env.local
+
+# IDEs and editors
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# OS metadata
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Local SQLite databases or Excel data outputs
+backend/data/*.xlsx
+backend/data/*.db
