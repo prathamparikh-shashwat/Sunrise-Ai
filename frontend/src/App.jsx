@@ -23,6 +23,7 @@ function App() {
   const [activeQuestionIndex, setActiveQuestionIndex] = useState(-1); // -1 represents business selection
   const [answers, setAnswers] = useState({});
   const [sheetSync, setSheetSync] = useState({ status: 'idle' });
+  const [suggestions, setSuggestions] = useState(null);
   const [messages, setMessages] = useState([
     {
       sender: 'bot',
@@ -70,6 +71,13 @@ function App() {
         message: data.message,
         url: data.spreadsheet_url,
       });
+      if (data.suggestions) {
+        setSuggestions({
+          list: data.suggestions,
+          source: data.ai_source,
+          message: data.ai_message
+        });
+      }
     } catch (error) {
       setSheetSync({
         status: 'error',
@@ -213,6 +221,7 @@ function App() {
     setActiveQuestionIndex(-1);
     setAnswers({});
     setSheetSync({ status: 'idle' });
+    setSuggestions(null);
     setMessages([
       {
         sender: 'bot',
@@ -278,6 +287,7 @@ function App() {
             answers={answers} 
             questions={questions}
             sheetSync={sheetSync}
+            suggestions={suggestions}
             onReset={handleReset} 
           />
         )}

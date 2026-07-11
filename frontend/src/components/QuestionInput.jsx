@@ -9,7 +9,7 @@ export default function QuestionInput({ question, onSubmit }) {
   useEffect(() => {
     setInputValue('');
     setError('');
-    if (question && (question.type === 'number' || question.type === 'text' || question.type === 'email' || question.allow_custom)) {
+    if (question && (question.type === 'number' || question.type === 'text' || question.type === 'email')) {
       setTimeout(() => {
         if (inputRef.current) {
           inputRef.current.focus();
@@ -55,7 +55,7 @@ export default function QuestionInput({ question, onSubmit }) {
       {question.type === 'single_select' ? (
         <div className="options-container">
           <p className="options-hint">Select one option to continue:</p>
-          <div className="options-grid" style={{ marginBottom: question.allow_custom ? '1rem' : '0' }}>
+          <div className="options-grid" style={{ marginBottom: '1rem' }}>
             {question.options.map((option, idx) => (
               <button
                 key={idx}
@@ -69,31 +69,29 @@ export default function QuestionInput({ question, onSubmit }) {
             ))}
           </div>
           
-          {question.allow_custom && (
-            <form onSubmit={handleFormSubmit} className="number-input-form animate-fade-in" style={{ marginTop: '1rem' }}>
-              <p className="options-hint">Or type your custom business type here:</p>
-              <div className="number-input-wrapper">
-                <input
-                  ref={inputRef}
-                  type="text"
-                  placeholder="Type custom business (e.g. Salon, Software, Restaurant...)"
-                  value={inputValue}
-                  onChange={(e) => {
-                    setInputValue(e.target.value);
-                    if (error) setError('');
-                  }}
-                  className={`number-field ${error ? 'field-error' : ''}`}
-                  id={`input-custom-${question.id}`}
-                />
-                <button type="submit" className="submit-arrow-btn" id={`submit-btn-custom-${question.id}`}>
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="send-icon">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
-                  </svg>
-                </button>
-              </div>
-              {error && <span className="error-message">{error}</span>}
-            </form>
-          )}
+          <form onSubmit={handleFormSubmit} className="number-input-form animate-fade-in" style={{ marginTop: '1rem' }}>
+            <p className="options-hint">Or type your custom response here:</p>
+            <div className="number-input-wrapper">
+              <input
+                ref={inputRef}
+                type="text"
+                placeholder="Type your response here..."
+                value={inputValue}
+                onChange={(e) => {
+                  setInputValue(e.target.value);
+                  if (error) setError('');
+                }}
+                className={`number-field ${error ? 'field-error' : ''}`}
+                id={`input-custom-${question.id}`}
+              />
+              <button type="submit" className="submit-arrow-btn" id={`submit-btn-custom-${question.id}`}>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="send-icon">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
+                </svg>
+              </button>
+            </div>
+            {error && <span className="error-message">{error}</span>}
+          </form>
         </div>
       ) : (
         <form onSubmit={handleFormSubmit} className="number-input-form">
