@@ -18,7 +18,7 @@ const businessSelectionQuestion = {
 };
 
 function App() {
-  const [stage, setStage] = useState('chat'); // 'chat' | 'report'
+  const [stage, setStage] = useState('chat'); // 'chat' | 'report' | 'loading'
   const [businessType, setBusinessType] = useState(null); // 'tailoring' | 'retail' | 'general' | null
   const [activeQuestionIndex, setActiveQuestionIndex] = useState(-1); // -1 represents business selection
   const [answers, setAnswers] = useState({});
@@ -78,11 +78,19 @@ function App() {
           message: data.ai_message
         });
       }
+      // Hold on the loading screen for a brief period to allow smooth animation
+      setTimeout(() => {
+        setStage('report');
+      }, 1500);
     } catch (error) {
       setSheetSync({
         status: 'error',
         message: error.message,
       });
+      // Transition to report page even on error to display the error status
+      setTimeout(() => {
+        setStage('report');
+      }, 1500);
     }
   };
 
@@ -204,13 +212,11 @@ function App() {
         [currentQ.id]: value
       };
       
+      // Transition to loading screen immediately
+      setStage('loading');
+
       // Submit responses to Google Sheets backend
       submitToGoogleSheets(businessType, finalAnswers);
-
-      // Transition to report dashboard
-      setTimeout(() => {
-        setStage('report');
-      }, 800);
     }
   };
 
@@ -277,6 +283,26 @@ function App() {
                 } 
                 onSubmit={handleAnswerSubmit} 
               />
+            </div>
+          </div>
+        )}
+
+        {stage === 'loading' && (
+          <div className="loading-screen animate-fade-in">
+            <div className="loading-card">
+              <div className="loading-pulse-container">
+                <div className="pulse-circle pulse-1"></div>
+                <div className="pulse-circle pulse-2"></div>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="loading-icon-svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 21L15.607 13H10.187L11 9L4.393 17H9.813z" />
+                </svg>
+              </div>
+              <h2 className="loading-title">Just a moment, AI is analyzing...</h2>
+              <p className="loading-subtitle-exact">just a moment ai is nalysis</p>
+              <div className="loading-bar-container">
+                <div className="loading-bar-progress"></div>
+              </div>
+              <p className="loading-status-text">Processing your responses & generating strategic suggestions</p>
             </div>
           </div>
         )}
