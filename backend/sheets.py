@@ -1,11 +1,17 @@
 import os
+import json
 from datetime import datetime
 from typing import Dict, Any, Tuple
 from fastapi import HTTPException, status
+from dotenv import load_dotenv
 import google.auth
 from google.auth.exceptions import DefaultCredentialsError
+from google.oauth2.service_account import Credentials
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
+
+# Load environment variables
+load_dotenv()
 
 # Default spreadsheet IDs per business type (override via env vars)
 DEFAULT_SPREADSHEET_IDS = {
@@ -160,8 +166,53 @@ def get_business_sheet_config(business_type: str, answers: Dict[str, Any]) -> Tu
 def get_sheets_service():
     """
     Authenticate with Google and build the Sheets API service.
-    Supports either local ADC or service account JSON key file path via GOOGLE_APPLICATION_CREDENTIALS env var.
+    Supports:
+    1. Individual environment variables (GOOGLE_CLIENT_EMAIL, GOOGLE_PRIVATE_KEY, etc.)
+    2. GOOGLE_CREDENTIALS_JSON env var (raw JSON string of service account key).
+    3. GOOGLE_APPLICATION_CREDENTIALS env var (path to JSON file).
+    4. Local ADC (Application Default Credentials).
     """
+    # 1. Try loading from individual env variables
+    client_email = os.getenv("GOOGLE_CLIENT_EMAIL")
+    private_key = os.getenv("GOOGLE_PRIVATE_KEY")
+    if client_email and private_key:
+        try:
+            # Reconstruct service account credentials from individual env variables
+            creds_info = {
+                "type": os.getenv("GOOGLE_TYPE", "service_account"),
+                "project_id": os.getenv("GOOGLE_PROJECT_ID"),
+                "private_key_id": os.getenv("GOOGLE_PRIVATE_KEY_ID"),
+                "private_key": private_key.replace("\\n", "\n"),
+                "client_email": client_email,
+                "client_id": os.getenv("GOOGLE_CLIENT_ID"),
+                "auth_uri": os.getenv("GOOGLE_AUTH_URI", "https://accounts.google.com/o/oauth2/auth"),
+                "token_uri": os.getenv("GOOGLE_TOKEN_URI", "https://oauth2.googleapis.com/token"),
+                "auth_provider_x509_cert_url": os.getenv("GOOGLE_AUTH_PROVIDER_X509_CERT_URL", "https://www.googleapis.com/oauth2/v1/certs"),
+                "client_x509_cert_url": os.getenv("GOOGLE_CLIENT_X509_CERT_URL"),
+                "universe_domain": os.getenv("GOOGLE_UNIVERSE_DOMAIN", "googleapis.com")
+            }
+            creds = Credentials.from_service_account_info(
+                creds_info,
+                scopes=["https://www.googleapis.com/auth/spreadsheets"]
+            )
+            return build("sheets", "v4", credentials=creds)
+        except Exception as e:
+            print(f"Error loading credentials from individual env variables: {e}")
+
+    # 2. Try loading from raw JSON string (secure production env vars)
+    creds_json_str = os.getenv("GOOGLE_CREDENTIALS_JSON")
+    if creds_json_str:
+        try:
+            creds_info = json.loads(creds_json_str)
+            creds = Credentials.from_service_account_info(
+                creds_info,
+                scopes=["https://www.googleapis.com/auth/spreadsheets"]
+            )
+            return build("sheets", "v4", credentials=creds)
+        except Exception as e:
+            print(f"Error loading credentials from GOOGLE_CREDENTIALS_JSON: {e}")
+
+    # 3. Try loading from file path
     credentials_path = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
     if credentials_path:
         if not os.path.isabs(credentials_path):
@@ -181,7 +232,8 @@ def get_sheets_service():
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail=(
-                "Google credentials not configured. Please set GOOGLE_APPLICATION_CREDENTIALS "
+                "Google credentials not configured. Please configure environment variables "
+                "(GOOGLE_CLIENT_EMAIL and GOOGLE_PRIVATE_KEY) or GOOGLE_APPLICATION_CREDENTIALS "
                 "or configure Application Default Credentials (ADC)."
             ),
         )

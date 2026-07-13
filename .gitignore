@@ -54,3 +54,6 @@ desktop.ini
 # Local SQLite databases or Excel data outputs
 backend/data/*.xlsx
 backend/data/*.db
+
+# Service Account Keys / Secrets
+backend/*.json

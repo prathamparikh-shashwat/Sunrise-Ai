@@ -471,10 +471,7 @@ def get_fallback_suggestions(business_type: str, answers: Dict[str, Any]) -> Dic
         }
 
 def get_gemini_suggestions(business_type: str, answers: Dict[str, Any]) -> Dict[str, Any]:
-    """
-    Analyze questionnaire answers using GenAI (Gemini API) and return structured suggestions.
-    Falls back to OpenRouter (openai/gpt-4o) if Router_Api_key is set, and finally to local offline suggestions.
-    """
+
     api_key = os.getenv("GemAI_API_Key") or os.getenv("GEMINI_API_KEY")
     router_api_key = os.getenv("Router_Api_key")
     

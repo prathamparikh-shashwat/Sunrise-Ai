@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 
 # Import our custom local spreadsheet integration helper and database module
 from local_sheets import sync_answers_to_local_sheet
+from sheets import sync_answers_to_sheet
 from gemini_service import get_gemini_suggestions
 from database import init_db, save_diagnostic_to_db
 
@@ -60,7 +61,21 @@ async def submit_answers(request: SubmitAnswersRequest):
         ai_source=ai_source
     )
 
-    # 3. Safely sync to local Excel sheet (secondary operation, non-blocking)
+    # 3. Safely sync to Google Sheets (primary) and local Excel sheet (secondary, non-blocking)
+    sheets_status = "skipped"
+    sheets_message = "No Google Sheets sync attempted."
+    spreadsheet_url = ""
+    
+    try:
+        sheets_sync_res = sync_answers_to_sheet(request.business_type, request.answers)
+        sheets_status = "success"
+        sheets_message = sheets_sync_res.get("message", "Google Sheets sync successful.")
+        spreadsheet_url = sheets_sync_res.get("spreadsheet_url", "")
+    except Exception as e:
+        sheets_status = "failed"
+        sheets_message = f"Google Sheets sync failed: {str(e)}"
+        print(f"Google Sheets sync failed: {sheets_message}")
+
     excel_status = "skipped"
     excel_message = "No local excel sync attempted."
     excel_path = None
@@ -82,7 +97,7 @@ async def submit_answers(request: SubmitAnswersRequest):
     # 4. Construct unified user-friendly response that maintains compatibility
     db_message = f"Saved to PostgreSQL DB (ID: {db_id})." if db_id else "Skipped/Failed DB save."
     
-    response_msg = f"{db_message} Excel sync: {excel_message}"
+    response_msg = f"{db_message} Sheets sync: {sheets_message}. Excel sync: {excel_message}"
     
     return {
         "status": "success" if db_id else "partial_success",
@@ -95,8 +110,9 @@ async def submit_answers(request: SubmitAnswersRequest):
         "excel_status": excel_status,
         "excel_message": excel_message,
         "excel_path": excel_path,
-        # Keep empty spreadsheet URL field for compatibility if frontend checks it
-        "spreadsheet_url": ""
+        "sheets_status": sheets_status,
+        "sheets_message": sheets_message,
+        "spreadsheet_url": spreadsheet_url
     }
 
 @app.get("/api/health")
