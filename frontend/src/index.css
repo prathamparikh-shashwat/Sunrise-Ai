@@ -79,6 +79,15 @@ header.app-header {
   filter: drop-shadow(0 0 8px rgba(224, 122, 95, 0.3));
 }
 
+.brand-logo-img {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1.5px solid var(--border-muted);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
 .brand-name {
   font-size: 1.1rem;
   font-weight: 700;

@@ -234,9 +234,7 @@ function App() {
     <>
       <header className="app-header">
         <div className="brand-wrapper">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="brand-logo-svg">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v18m9-9H3M18 9l3 3-3 3M6 9l-3 3 3 3" />
-          </svg>
+          <img src="https://res.cloudinary.com/coffewithpratham/image/upload/v1784007284/images_mui8mx.jpg" alt="Shashwat Logo" className="brand-logo-img" />
           <div>
             <span className="brand-name">Shashwat</span>
             <span className="brand-tagline">AI Enabled Chatbot</span>
