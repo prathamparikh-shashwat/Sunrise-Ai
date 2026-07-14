@@ -234,7 +234,7 @@ function App() {
     <>
       <header className="app-header">
         <div className="brand-wrapper">
-          <img src="https://res.cloudinary.com/coffewithpratham/image/upload/v1784007284/images_mui8mx.jpg" alt="Shashwat Logo" className="brand-logo-img" />
+          <img src="https://res.cloudinary.com/coffewithpratham/image/upload/v1784012092/Shashwat_logo_hd_zut2cu.png" alt="Shashwat Logo" className="brand-logo-img" />
           <div>
             <span className="brand-name">Shashwat</span>
             <span className="brand-tagline">AI Enabled Chatbot</span>
