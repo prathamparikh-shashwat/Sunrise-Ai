@@ -13,7 +13,7 @@ import generalData from './data/general.json';
 
 const businessSelectionQuestion = {
   id: 'business_type',
-  question: "Welcome to Sunrise AI Consultant. Please tell us your business:",
+  question: "Welcome to Shashwat - AI Enabled Chatbot. Please tell us your business:",
   type: 'text'
 };
 
@@ -78,19 +78,11 @@ function App() {
           message: data.ai_message
         });
       }
-      // Hold on the loading screen for a brief period to allow smooth animation
-      setTimeout(() => {
-        setStage('report');
-      }, 1500);
     } catch (error) {
       setSheetSync({
         status: 'error',
         message: error.message,
       });
-      // Transition to report page even on error to display the error status
-      setTimeout(() => {
-        setStage('report');
-      }, 1500);
     }
   };
 
@@ -212,8 +204,8 @@ function App() {
         [currentQ.id]: value
       };
       
-      // Transition to loading screen immediately
-      setStage('loading');
+      // Transition to report page immediately (loading screen removed)
+      setStage('report');
 
       // Submit responses to Google Sheets backend
       submitToGoogleSheets(businessType, finalAnswers);
@@ -246,8 +238,8 @@ function App() {
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v18m9-9H3M18 9l3 3-3 3M6 9l-3 3 3 3" />
           </svg>
           <div>
-            <span className="brand-name">Sunrise</span>
-            <span className="brand-tagline">AI Consultant</span>
+            <span className="brand-name">Shashwat</span>
+            <span className="brand-tagline">AI Enabled Chatbot</span>
           </div>
         </div>
         <div style={{ fontSize: '0.75rem', fontFamily: 'monospace', color: 'var(--text-muted)' }}>
@@ -287,25 +279,7 @@ function App() {
           </div>
         )}
 
-        {stage === 'loading' && (
-          <div className="loading-screen animate-fade-in">
-            <div className="loading-card">
-              <div className="loading-pulse-container">
-                <div className="pulse-circle pulse-1"></div>
-                <div className="pulse-circle pulse-2"></div>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="loading-icon-svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 21L15.607 13H10.187L11 9L4.393 17H9.813z" />
-                </svg>
-              </div>
-              <h2 className="loading-title">Just a moment, AI is analyzing...</h2>
-              <p className="loading-subtitle-exact">just a moment ai is nalysis</p>
-              <div className="loading-bar-container">
-                <div className="loading-bar-progress"></div>
-              </div>
-              <p className="loading-status-text">Processing your responses & generating strategic suggestions</p>
-            </div>
-          </div>
-        )}
+
 
         {stage === 'report' && (
           <ReportDashboard 
@@ -318,6 +292,20 @@ function App() {
           />
         )}
       </main>
+      
+      <footer className="app-footer">
+        <div className="footer-brand">
+          <span>Shashwat - AI Enabled Chatbot</span>
+          <span className="footer-badge">with Gsheet Integration</span>
+        </div>
+        <ul className="footer-verticals">
+          <li><span className="footer-verticals-dot"></span>Retail</li>
+          <li><span className="footer-verticals-dot"></span>ECOM</li>
+          <li><span className="footer-verticals-dot"></span>Jewelry Business</li>
+          <li><span className="footer-verticals-dot"></span>Loan services</li>
+          <li><span className="footer-verticals-dot"></span>Restaurant</li>
+        </ul>
+      </footer>
     </>
   );
 }

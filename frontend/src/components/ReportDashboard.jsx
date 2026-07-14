@@ -97,10 +97,19 @@ export default function ReportDashboard({ businessType, answers, onReset, questi
           className={`tab-btn ${activeTab === 'suggestions' ? 'active' : ''}`}
           onClick={() => setActiveTab('suggestions')}
         >
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="tab-icon ai-glow">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904 9 21m0 0-.813-5.096L3.6 14.85l5.096-.813L9.813 9l.813 5.037 5.096.813-5.096.813ZM19.071 4.929a10 10 0 1 1-14.142 14.142 10 10 0 0 1 14.142-14.142Z" />
-          </svg>
+          {sheetSync && sheetSync.status === 'saving' ? (
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="tab-icon ai-glow" style={{ animation: 'spinIcon 2s infinite linear' }}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
+            </svg>
+          ) : (
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="tab-icon ai-glow">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904 9 21m0 0-.813-5.096L3.6 14.85l5.096-.813L9.813 9l.813 5.037 5.096.813-5.096.813ZM19.071 4.929a10 10 0 1 1-14.142 14.142 10 10 0 0 1 14.142-14.142Z" />
+            </svg>
+          )}
           Software Solutions
+          {sheetSync && sheetSync.status === 'saving' && (
+            <span className="tab-loading-dot" style={{ display: 'inline-block', width: '8px', height: '8px', borderRadius: '50%', background: 'var(--terracotta)', marginLeft: '6px', animation: 'pulseOuter 1.5s infinite ease-in-out' }}></span>
+          )}
         </button>
       </div>
 
@@ -219,13 +228,25 @@ export default function ReportDashboard({ businessType, answers, onReset, questi
       {activeTab === 'suggestions' && (
         <div className="suggestions-section animate-slide-up">
           <div style={{ marginBottom: '1.5rem' }}>
-            <h2 className="section-title">Sunrise Software Recommendations</h2>
+            <h2 className="section-title">Shashwat Software Recommendations</h2>
             <p className="section-subtitle">
-              Based on your diagnostic answers, we have structured a custom solution from the Sunrise software suite to optimize your business operations.
+              Based on your diagnostic answers, we have structured a custom solution from the Shashwat software suite to optimize your business operations.
             </p>
           </div>
 
-          {sugData && sugData.software_name ? (
+          {sheetSync && sheetSync.status === 'saving' ? (
+            <div style={{ textAlign: 'center', padding: '3.5rem 2rem', background: 'var(--bg-card)', borderRadius: '12px', border: '1px solid var(--border-muted)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem', boxShadow: '0 4px 20px rgba(0, 0, 0, 0.05)' }}>
+              <div className="loading-pulse-container" style={{ margin: '0 auto' }}>
+                <div className="pulse-circle pulse-1"></div>
+                <div className="pulse-circle pulse-2"></div>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="loading-icon-svg" style={{ animation: 'spinIcon 3s infinite linear' }}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 21L15.607 13H10.187L11 9L4.393 17H9.813z" />
+                </svg>
+              </div>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: '700', color: 'var(--text-primary)', margin: 0 }}>Generating Software Solutions...</h3>
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', margin: 0, maxWidth: '400px' }}>AI is currently analyzing your diagnostic answers to build a customized software recommendation package.</p>
+            </div>
+          ) : sugData && sugData.software_name ? (
             <div className="solutions-container">
               {/* Product recommendation hero */}
               <div className="solutions-hero animate-slide-up">
@@ -391,7 +412,11 @@ export default function ReportDashboard({ businessType, answers, onReset, questi
             </div>
           ) : (
             <div style={{ textAlign: 'center', padding: '3rem', background: 'var(--bg-secondary)', borderRadius: '12px', border: '1px solid var(--border-muted)' }}>
-              <p style={{ color: 'var(--text-muted)' }}>No suggestions available. Please complete the questionnaire to generate ideas.</p>
+              <p style={{ color: 'var(--text-muted)' }}>
+                {sheetSync && sheetSync.status === 'error' 
+                  ? `Failed to generate suggestions: ${sheetSync.message}` 
+                  : 'No suggestions available. Please complete the questionnaire to generate ideas.'}
+              </p>
             </div>
           )}
         </div>

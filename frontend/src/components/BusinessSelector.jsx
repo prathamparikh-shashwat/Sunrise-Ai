@@ -5,7 +5,7 @@ export default function BusinessSelector({ onSelect }) {
     <div className="selector-container">
       <div className="selector-header">
         <div className="pulse-dot"></div>
-        <span className="selector-subtitle">Sunrise AI Consultation Engine v1.0</span>
+        <span className="selector-subtitle">Shashwat - AI Enabled Chatbot v1.0</span>
         <h1 className="selector-title">Select Business Vertical</h1>
         <p className="selector-desc">
           Begin your strategic operational review. Select your business type below to initialize the custom diagnostic consultation.
